@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Weather in {{ location.city }}, {{ location.country }}
+{% endblock %}
+
+{% block body %}
+    <main>
+        <h1>Weather in {{ location.city }}, {{ location.country }}</h1>
+
+        <ul>
+            {% for m in measurements %}
+                {% set value = m.value|first %}
+                {% if value %}
+                    <li>{{ m.date|date('d.m.Y') }}: {{ value.value }}{{ value.attribute.unit }}</li>
+                {% endif %}
+            {% else %}
+                <li>No measurements available.</li>
+            {% endfor %}
+        </ul>
+    </main>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Location;
 use App\Entity\Value;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -15,6 +16,8 @@ class ValueRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Value::class);
     }
+
+
 
 //    /**
 //     * @return Value[] Returns an array of Value objects
