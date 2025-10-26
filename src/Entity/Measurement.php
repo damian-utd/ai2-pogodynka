@@ -16,8 +16,10 @@ class Measurement
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'measurements')]
+    #[ORM\ManyToOne(targetEntity: Location::class, inversedBy: 'measurements')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Location $location = null;
+
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $date = null;

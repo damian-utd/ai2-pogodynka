@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista wartości{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Lista wartości</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Miasto</th>
+                <th>Kraj</th>
+                <th>Data pomiaru</th>
+                <th>Atrybut</th>
+                <th>Jednostka</th>
+                <th>Wartość</th>
+                <th>Akcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for value in values %}
+                <tr>
+                    <td>{{ value.id }}</td>
+                    <td>{{ value.measurement.location.city }}</td>
+                    <td>{{ value.measurement.location.country }}</td>
+                    <td>{{ value.measurement.date|date('Y-m-d') }}</td>
+                    <td>{{ value.attribute.name }}</td>
+                    <td>{{ value.attribute.unit }}</td>
+                    <td>{{ value.value }}</td>
+                    <td>
+                        <a href="{{ path('app_value_show', {'id': value.id}) }}" >Pokaż</a>
+                        <a href="{{ path('app_value_edit', {'id': value.id}) }}" >Edytuj</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8" class="text-center">Brak danych</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_value_new') }}" >Dodaj nową wartość</a>
+    </div>
+{% endblock %}

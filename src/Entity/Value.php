@@ -13,11 +13,11 @@ class Value
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'value')]
+    #[ORM\ManyToOne(targetEntity: Measurement::class, inversedBy: 'value')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Measurement $measurement = null;
 
-    #[ORM\ManyToOne(inversedBy: 'value')]
+    #[ORM\ManyToOne(targetEntity: Attributes::class, inversedBy: 'value')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Attributes $attribute = null;
 

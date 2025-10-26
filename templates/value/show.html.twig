@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Szczegóły wartości{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 >Szczegóły wartości #{{ value.id }}</h1>
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Wartość</th>
+                <td>{{ value.value }}</td>
+            </tr>
+            <tr>
+                <th>Data pomiaru</th>
+                <td>{{ value.measurement.date ? value.measurement.date|date('Y-m-d') : '—' }}</td>
+            </tr>
+            <tr>
+                <th>Miasto</th>
+                <td>{{ value.measurement.location ? value.measurement.location.city : '—' }}</td>
+            </tr>
+            <tr>
+                <th>Kraj</th>
+                <td>{{ value.measurement.location ? value.measurement.location.country : '—' }}</td>
+            </tr>
+            <tr>
+                <th>Atrybut</th>
+                <td>{{ value.attribute ? value.attribute.name : '—' }}</td>
+            </tr>
+            <tr>
+                <th>Jednostka</th>
+                <td>{{ value.attribute ? value.attribute.unit : '—' }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_value_edit', {'id': value.id}) }}" >Edytuj</a>
+        <a href="{{ path('app_value_index') }}" >Wróć do listy</a>
+    </div>
+{% endblock %}
