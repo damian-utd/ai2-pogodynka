@@ -10,11 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/value')]
 final class ValueController extends AbstractController
 {
     #[Route('/', name: 'app_value_index', methods: ['GET'])]
+    #[isGranted('ROLE_VALUE_INDEX')]
     public function index(EntityManagerInterface $entityManager): Response
     {
         $query = $entityManager->createQueryBuilder()
@@ -34,6 +36,7 @@ final class ValueController extends AbstractController
 
 
     #[Route('/new', name: 'app_value_new', methods: ['GET', 'POST'])]
+    #[isGranted('ROLE_VALUE_NEW')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $value = new Value();
@@ -56,6 +59,7 @@ final class ValueController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_value_show', methods: ['GET'])]
+    #[isGranted('ROLE_VALUE_SHOW')]
     public function show(Value $value): Response
     {
         return $this->render('value/show.html.twig', [
@@ -64,6 +68,7 @@ final class ValueController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_value_edit', methods: ['GET', 'POST'])]
+    #[isGranted('ROLE_VALUE_EDIT')]
     public function edit(Request $request, Value $value, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ValueType::class, $value, [
@@ -84,6 +89,7 @@ final class ValueController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_value_delete', methods: ['POST'])]
+    #[isGranted('ROLE_VALUE_DELETE')]
     public function delete(Request $request, Value $value, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$value->getId(), $request->getPayload()->getString('_token'))) {

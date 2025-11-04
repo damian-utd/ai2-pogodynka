@@ -10,11 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/attributes')]
 final class AttributesController extends AbstractController
 {
     #[Route(name: 'app_attributes_index', methods: ['GET'])]
+    #[isGranted('ROLE_ATTRIBUTES_INDEX')]
     public function index(AttributesRepository $attributesRepository): Response
     {
         return $this->render('attributes/index.html.twig', [
@@ -23,6 +25,7 @@ final class AttributesController extends AbstractController
     }
 
     #[Route('/new', name: 'app_attributes_new', methods: ['GET', 'POST'])]
+    #[isGranted('ROLE_ATTRIBUTES_NEW')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $attribute = new Attributes();
@@ -45,6 +48,7 @@ final class AttributesController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_attributes_show', methods: ['GET'])]
+    #[isGranted('ROLE_ATTRIBUTES_SHOW')]
     public function show(Attributes $attribute): Response
     {
         return $this->render('attributes/show.html.twig', [
@@ -53,6 +57,7 @@ final class AttributesController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_attributes_edit', methods: ['GET', 'POST'])]
+    #[isGranted('ROLE_ATTRIBUTES_EDIT')]
     public function edit(Request $request, Attributes $attribute, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(AttributesType::class, $attribute, [
@@ -73,6 +78,7 @@ final class AttributesController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_attributes_delete', methods: ['POST'])]
+    #[isGranted('ROLE_ATTRIBUTES_DELETE')]
     public function delete(Request $request, Attributes $attribute, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$attribute->getId(), $request->getPayload()->getString('_token'))) {
